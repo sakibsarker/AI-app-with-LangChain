@@ -8,7 +8,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")  
-
+ 
 llm_model="gpt-3.5-turbo-0125"
 chat_model=OpenAI(temperature=0.7,model=llm_model)
 
@@ -31,10 +31,12 @@ I don't want this! Actually no one should want this.
 Seriously! Give me money now!
 """
 
+tone="""Proper English in a nice, warm, respectful tone"""
+language="Portuguese"
 
 promp=f"""
-Rewrite the following {customer_review} in a polite tone, and then
-please translate the new review message into Portuguese.
+Rewrite the following {customer_review} in a {tone}, and then
+please translate the new review message into {language}.
 """
 
 rewrite=get_completion(prompt=promp)
