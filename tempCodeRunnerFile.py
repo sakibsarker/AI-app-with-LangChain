@@ -1,1 +1,1 @@
-print('sakib')
+chat_model=OpenAI(temperature=0.7,model=llm_model)

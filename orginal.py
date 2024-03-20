@@ -15,6 +15,18 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")  
  
 llm_model="gpt-3.5-turbo-0125"
+# chat_model=OpenAI(temperature=0.7,model=llm_model)
+
+
+def get_completion(prompt,model=llm_model):
+    messages=[{"role":"user","content":prompt}]
+    response=openai.chat.completions.create(
+        model=model,
+        messages=messages,
+        temperature=0,
+    )
+    return response.choices[0].message.content
+
 
 
 customer_review="""
@@ -24,6 +36,16 @@ I don't want this! Actually no one should want this.
 Seriously! Give me money now!
 """
 
+tone="""Proper English in a nice, warm, respectful tone"""
+language="Portuguese"
+
+promp=f"""
+Rewrite the following {customer_review} in a {tone}, and then
+please translate the new review message into {language}.
+"""
+
+rewrite=get_completion(prompt=promp)
+print(rewrite)
 
 
 #using Langchain & prompt templates
@@ -37,10 +59,8 @@ into italiano in a polite tone
 """
 
 prompt_template = ChatPromptTemplate.from_template(template_string)
-translation_message = prompt_template.format_prompt(
-    customer_review=customer_review
-)
-response=chat_model(translation_message)
+translation_message = prompt_template.format_prompt().to_messages()
+response=openai.chat.completions.create(messages=translation_message)
 
 response = chat_model(response)
 print(response)
