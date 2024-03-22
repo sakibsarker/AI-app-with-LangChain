@@ -4,13 +4,16 @@ from dotenv import load_dotenv
 from langchain_openai import OpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
+from langchain.chains import LLMChain
+
 
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")  
  
-llm_model="gpt-3.5-turbo-0125"
+llm_model="gpt-3.5-turbo"
+chat_model=OpenAI(temperature=0.7,model=llm_model)
 
 
 def get_completion(prompt,model=llm_model):
@@ -39,8 +42,8 @@ Rewrite the following {customer_review} in a {tone}, and then
 please translate the new review message into {language}.
 """
 
-# rewrite=get_completion(prompt=promp)
-# print(rewrite)
+rewrite=get_completion(prompt=promp)
+print(rewrite)
 
 
 #using Langchain & prompt templates
@@ -60,4 +63,4 @@ prompt_template = ChatPromptTemplate.from_messages([
 
 chain = prompt_template | chat_model
 
-chain.invoke({"input": f"{template_string}"})
+print(chain.invoke({"input": f"{template_string}"}))

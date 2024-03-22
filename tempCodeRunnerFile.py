@@ -1,1 +1,1 @@
-chat_model=OpenAI(temperature=0.7,model=llm_model)
+chat_model=OpenAI(openai_api_key=OPENAI_API_KEY)

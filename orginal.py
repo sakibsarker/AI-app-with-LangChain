@@ -59,8 +59,10 @@ into italiano in a polite tone
 """
 
 prompt_template = ChatPromptTemplate.from_template(template_string)
-translation_message = prompt_template.format_prompt().to_messages()
-response=openai.chat.completions.create(messages=translation_message)
+translation_message = prompt_template.format_messages(
+    customer_review=customer_review
+)
+response=chat_model(translation_message)
 
 response = chat_model(response)
 print(response)
