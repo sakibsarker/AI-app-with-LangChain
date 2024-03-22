@@ -1,11 +1,11 @@
-from langchain.chat_models import ChatOpenAI
-from langchain import LLMChain
+from langchain_openai import OpenAI
+from langchain.chains import LLMChain
 from langchain.prompts import HumanMessagePromptTemplate, ChatPromptTemplate
 from dotenv import load_dotenv
 
 load_dotenv()
 
-chat = ChatOpenAI()
+chat = OpenAI()
 
 prompt = ChatPromptTemplate(
     input_variables=["content"],
@@ -22,6 +22,6 @@ chain = LLMChain(
 while True:
     content = input(">> ")
 
-    result = chain({"content": content})
+    result = chain.invoke({"content": content})
 
     print(result["text"])
