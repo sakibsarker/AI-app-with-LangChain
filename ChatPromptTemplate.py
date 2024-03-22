@@ -12,7 +12,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")  
  
-llm_model="gpt-3.5-turbo"
+llm_model="gpt-3.5-turbo-0125"
 chat_model=OpenAI(temperature=0.7,model=llm_model)
 
 
@@ -58,7 +58,7 @@ into italiano in a polite tone
 
 prompt_template = ChatPromptTemplate.from_messages([
     ("system", f"{template_string}"),
-    ("user", "{input}")
+    ("user", "{input}"),
 ])
 
 chain = prompt_template | chat_model

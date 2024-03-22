@@ -1,1 +1,1 @@
-chat_model=OpenAI(openai_api_key=OPENAI_API_KEY)
+print(response.content)

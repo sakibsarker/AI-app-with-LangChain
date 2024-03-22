@@ -20,7 +20,7 @@ chain = LLMChain(
 )
 
 while True:
-    content = input(">> ")
+    content = input("Enter: >> ")
 
     result = chain.invoke({"content": content})
 
