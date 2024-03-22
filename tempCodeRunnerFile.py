@@ -1,1 +1,1 @@
-print(response.content)
+chain = prompt | chat_model | output_parser
