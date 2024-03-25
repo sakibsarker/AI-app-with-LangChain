@@ -56,18 +56,19 @@ email: {email}
 """
 
 class VacationInfo(BaseModel):
-    leave_time:str=Field(description="When they are leaving.It's usually")
-    leave_from:str=Field(description="Where are they leaving from.\
+    leave_time: str=Field(description="When they are leaving.It's usually")
+    leave_from: str=Field(description="Where are they leaving from.\
                          it's a city, airport or state, or province")
-    cities_to_visit:List=Field(description="The cities, towns they will be visisting on\
+    cities_to_visit: List=Field(description="The cities, towns they will be visisting on\
                          their trip. This needs to be in a list")
-    num_people:int=Field(description="this is an integer for a number of people on this trip")
+    num_people: int=Field(description="this is an integer for a number of people on this trip")
 
     @validator('num_people')
     def check_num_people(cls,field):
         if field<=0:
             raise ValueError("Badly formed number")
         return field
+    
 pydantic_parser=PydanticOutputParser(pydantic_object=VacationInfo)
 format_instructions=pydantic_parser.get_format_instructions()
 
@@ -82,7 +83,16 @@ email: {email}
 """
 
 updated_prompt=ChatPromptTemplate.from_template(template=email_template_revised)
-messages=updated_prompt.from_messages(email=email_response,
+meassages=updated_prompt.format_messages(email=email_response,
                                       format_instructions=format_instructions)
-format_response=chat_model.invoke(messages)
-print(format_response)
+format_response=chat_model.invoke(meassages)
+# print(type(format_response.content))
+
+vacation=pydantic_parser.parse(format_response.content)
+# print(type(vacation))
+print(f"Time: {vacation.leave_time}")
+print(f"Leave from: {vacation.leave_from}")
+print(f"Total prople: {vacation.num_people}")
+
+for iteam in vacation.cities_to_visit:
+    print(f"Cities: {iteam}")
