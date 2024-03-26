@@ -18,7 +18,11 @@ def main():
             st.write(data_frame.head())
             # data_frame["AMOUNT"]=data_frame["AMOUNT"].astype(float)
             data_frame["AMOUNT"] = data_frame["AMOUNT"].str.replace('[^\d.]', '', regex=True).astype(float)
-            st.write("Average bill amount: ",data_frame["AMOUNT"].mean())
+            # st.write("Average bill amount: ",data_frame["AMOUNT"].mean())
+            average_bill_amount = data_frame["AMOUNT"].mean()
+            formatted_average_bill_amount = round(average_bill_amount, 2)
+            st.write("Average bill amount: ", formatted_average_bill_amount)
+
 
             #convert to csv
             convert_to_csv=data_frame.to_csv(index=False).encode("utf-8")

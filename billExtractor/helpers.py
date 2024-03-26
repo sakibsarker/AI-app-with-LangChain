@@ -11,8 +11,8 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")  
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")  
  
 llm_model="gpt-3.5-turbo-0125"
 # chat_model=ChatOpenAI(temperature=0.7,model=llm_model)
