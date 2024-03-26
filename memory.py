@@ -14,14 +14,17 @@ SERPAPI_API_KEY = os.getenv("SERPAPI_API_KEY")
 llm_model="gpt-3.5-turbo-0125"
 llm=ChatOpenAI(temperature=0.7,model=llm_model)
 
-
 memory = ConversationBufferMemory()
+
 conversation = ConversationChain(
     llm=llm,
     verbose=True,
-    memory=ConversationBufferMemory()
+    memory=memory
 )
 
-conversation.predict(input="My name is Sakib. What is yours?")
-conversation.predict(input="Great! What's my name?")
-conversation.predict(input="Thank you")
+conversation.predict(input="My there, I am Sakib")
+conversation.predict(input="Why is the sky blue?")
+conversation.predict(input="If phenomenon called Rayleigh didn't exist, what color would the sky be?")
+conversation.predict(input="What's my name?")
+
+print(memory.load_memory_variables({}))
