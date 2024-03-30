@@ -1,1 +1,1 @@
-print(chain.invoke(language="German"))
+response=chain.run("I need to go to Kenya for vaction, a family of four, Can you help me plan this trip?")
