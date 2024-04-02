@@ -1,6 +1,7 @@
 import os
 from langchain_openai import ChatOpenAI,OpenAIEmbeddings
 from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import CharacterTextSplitter,RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 import numpy as np
@@ -9,18 +10,15 @@ llm="gpt-3.5-turbo-0125"
 chat = ChatOpenAI(temperature=0.9, model=llm)
 embeddings=OpenAIEmbeddings()
 
-with open("./data/dream.txt",encoding="utf-8") as papper:
-    speech=papper.read()
+loader=PyPDFLoader("./data/react-paper.pdf")
+docs = loader.load()
 
 text_splitter=RecursiveCharacterTextSplitter(
     chunk_size=500,
     chunk_overlap=100,
-    length_function=len,
-    is_separator_regex=False,
 )
 
-splits=text_splitter.create_documents([speech])
-# print(len(splits))
+splits=text_splitter.split_documents(docs)
 
 
 persist_directory="./data/db/chroma"
