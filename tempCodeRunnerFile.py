@@ -1,1 +1,1 @@
-print(f"ChatGPT {llm.predict('what is 3.1^2.1')}")
+print(result['output'])

@@ -3,9 +3,14 @@ from langchain.agents import Tool,initialize_agent,load_tools
 from langchain.agents import AgentExecutor, create_openai_functions_agent
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
+from langchain.memory import ConversationBufferMemory
 
 llm_model = "gpt-3.5-turbo-0125"
 llm = OpenAI(temperature=0.0)
+
+#memory
+memory = ConversationBufferMemory(memory_key="chat_history")
+#second generic tool
  
 prompt=PromptTemplate(
     input_variables=["query"],
@@ -27,22 +32,20 @@ tools = load_tools(
 
 tools.append(llm_tool) #adding the new tool to our tools list
 
-print(tools[0].name, tools[0].description)
-
-
-agent = initialize_agent(
-    agent="zero-shot-react-description",
+#conversational agent
+conversational_agent=initialize_agent(
+    agent="conversational-react-description",
     tools=tools,
     llm=llm,
     verbose=True,
-    max_iterations=3
+    max_interactions=3,
+    memory=memory
 )
 
-query = "If i have 54 eggs and Mary has 10, and 5 more people have 12 eggs each. \
-    How many eggs to we have in total?"
+query = "How old is a person born in 1917 in 2023"
 
-print(agent.agent.llm_chain.prompt.template)
-result = agent.invoke(query)
-
-print(result['output'])
-
+query_two="How old would that person be if their age is multiplied by 100?"
+print(conversational_agent.agent.llm_chain.prompt.template)
+result = conversational_agent.invoke(query)
+results = conversational_agent.invoke(query_two)
+# print(result['output'])
