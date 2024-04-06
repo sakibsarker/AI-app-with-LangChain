@@ -1,5 +1,5 @@
 import os
-from langchain_openai import OpenAI,OpenAIEmbeddings
+from langchain_openai import ChatOpenAI,OpenAIEmbeddings
 import openai
 import streamlit as st
 import json
@@ -35,7 +35,7 @@ def pick_best_articles_urls(response_json, query):
     response_str = json.dumps(response_json)
     
     # create llm to choose best articles
-    llm = OpenAI(temperature=0.7)
+    llm = ChatOpenAI(temperature=0.7)
     template = """ 
       You are a world class journalist, researcher, tech, Software Engineer, Developer and a online course creator
       , you are amazing at finding the most interesting and relevant, useful articles in certain topics.
@@ -98,7 +98,7 @@ def summarizer(db, query, k=4):
     # Join the content of the page_content attribute from eac document...
     docs_page_content = " ".join([d.page_content for d in docs])
     
-    llm = OpenAI(model="gpt-3.5-turbo", temperature=.7)
+    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=.7)
     template = """
        {docs}
         As a world class journalist, researcher, article, newsletter and blog writer, 
@@ -129,7 +129,7 @@ def summarizer(db, query, k=4):
 # 5. Turn summarization into newsletter (or article...)
 def generate_newsletter(summaries, query):
     summaries_str = str(summaries)
-    llm = OpenAI(model="gpt-3.5-turbo", 
+    llm = ChatOpenAI(model="gpt-3.5-turbo", 
                      temperature=.7)
     template = """
     {summaries_str}
