@@ -63,7 +63,12 @@ def pick_best_articles_urls(response_json, query):
                                      query=query)
     
     # Convert string to list
-    url_list = json.loads(urls)
+    # url_list = json.loads(urls)
+    try:
+        url_list = json.loads(urls)
+    except json.JSONDecodeError:
+        print("Error decoding JSON response from the API")
+        url_list = []
     #print(url_list)
     return url_list
 
