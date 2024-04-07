@@ -1,0 +1,1 @@
+result=qa_chain("Who is the CV about?")

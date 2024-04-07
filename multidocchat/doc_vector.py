@@ -44,11 +44,12 @@ vectordb.persist()
 
 qa_chain=RetrievalQA.from_chain_type(
     llm,
-    retriever=vectordb.as_retriever(search_kwargs={'k':7}),
+    retriever=vectordb.as_retriever(search_kwargs={'k':3}),
     return_source_documents=True
 )
 
 result=qa_chain.invoke({"query":"Who is the CV about?"})
+# result=qa_chain("Who is the CV about?")
 # results=qa_chain({'query':'Who is the CV about?'})
 
 print(result['result'])
