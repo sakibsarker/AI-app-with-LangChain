@@ -10,6 +10,9 @@ from langchain.chains import (LLMChain, ConversationalRetrievalChain)
 from load_docs import load_docs
 import streamlit as st
 from streamlit_chat import message
+from langchain.globals import set_verbose
+
+set_verbose(True)
 
 load_dotenv(find_dotenv())
 openai.api_key = os.getenv("OPENAI_API_KEY")
